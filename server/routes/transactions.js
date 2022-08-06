@@ -20,7 +20,12 @@ router
       }
       res.status(httpStatus.OK).json({
         success: true,
-        data: doc,
+        data: {
+          _id: doc._id,
+          text: doc.text,
+          amount: doc.amount,
+          type: doc.type,
+        },
         message: "Transaction added",
       });
     });
