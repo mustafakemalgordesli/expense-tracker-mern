@@ -7,10 +7,14 @@ db.once("open", () => {
 });
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGODB_CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    await mongoose.connect(process.env.MONGODB_CONNECTION_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  } catch (error) {
+    console.log("MongoDb Connection UnSuccessfull");
+  }
 };
 
 module.exports = connectDB;

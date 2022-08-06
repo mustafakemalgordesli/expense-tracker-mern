@@ -13,12 +13,12 @@ router
     const addedTransaction = new Transaction(req.body);
     addedTransaction.save((err, doc) => {
       if (err) {
-        next({
+        return next({
           statusCode: httpStatus.BAD_REQUEST,
           message: "Transaction not added",
         });
       }
-      res.status(httpStatus.OK).json({
+      return res.status(httpStatus.OK).json({
         success: true,
         data: {
           _id: doc._id,
@@ -34,7 +34,7 @@ router
 router.route("/").get((req, res, next) => {
   Transaction.find({ isDeleted: false }, (err, data) => {
     if (err) {
-      next({
+      return next({
         statusCode: httpStatus.INTERNAL_SERVER_ERROR,
         message: "Failed to fetch transactions",
       });
@@ -58,24 +58,31 @@ router.route("/:id").delete((req, res, next) => {
   const { id } = req.params;
   Transaction.findOne({ _id: id }, (err, transaction) => {
     if (err) {
-      next({
+      return next({
         statusCode: httpStatus.NOT_FOUND,
         message: "Transaction not found",
       });
     }
 
-    transaction.isDeleted = true;
-    transaction.save((err) => {
-      if (err) {
-        next({
-          statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-          message: "Transaction not deleted",
+    if (!transaction.isDeleted) {
+      transaction.isDeleted = true;
+      transaction.save((err) => {
+        if (err) {
+          return next({
+            statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Transaction not deleted",
+          });
+        }
+        return res.status(httpStatus.OK).json({
+          message: "Transaction is deleted",
+          success: true,
         });
-      }
-      return res.status(httpStatus.OK).json({
-        message: "Transaction is deleted",
-        success: true,
       });
+    }
+
+    return next({
+      statusCode: httpStatus.NOT_FOUND,
+      message: "Transaction not found",
     });
   });
 });
