@@ -1,9 +1,26 @@
 import "./App.css";
+import Header from "./components/Header";
+import AddTransaction from "./components/AddTransaction";
+import TotalBalance from "./components/TotalBalance";
+import IncomeExpenses from "./components/IncomeExpenses";
+import TransactionHistory from "./components/TransactionHistory";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Expense Tracker</header>
+      <Header />
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6 col-md-6 col-sm-12 p-5">
+            <TotalBalance />
+            <IncomeExpenses />
+            <TransactionHistory />
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12">
+            <AddTransaction />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
