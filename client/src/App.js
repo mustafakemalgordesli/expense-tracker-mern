@@ -4,23 +4,26 @@ import AddTransaction from "./components/AddTransaction";
 import TotalBalance from "./components/TotalBalance";
 import IncomeExpenses from "./components/IncomeExpenses";
 import TransactionHistory from "./components/TransactionHistory";
+import TransactionProvider from "./context/TransactionContext";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-12 p-5">
-            <TotalBalance />
-            <IncomeExpenses />
-            <TransactionHistory />
-          </div>
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <AddTransaction />
+      <TransactionProvider>
+        <Header />
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12 p-5">
+              <TotalBalance />
+              <IncomeExpenses />
+              <TransactionHistory />
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <AddTransaction />
+            </div>
           </div>
         </div>
-      </div>
+      </TransactionProvider>
     </div>
   );
 }
