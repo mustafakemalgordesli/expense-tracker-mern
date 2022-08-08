@@ -56,35 +56,16 @@ router.route("/").get((req, res, next) => {
 
 router.route("/:id").delete((req, res, next) => {
   const { id } = req.params;
-  console.log(id);
-  Transaction.findOne({ _id: id }, (err, transaction) => {
-    console.log(transaction, "1");
+  Transaction.remove({ _id: id }, (err) => {
     if (err) {
       next({
-        statusCode: httpStatus.NOT_FOUND,
-        message: "Transaction not found",
+        statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+        message: "Transaction not deleted",
       });
     }
-    console.log(transaction, "2");
-    if (!transaction.isDeleted) {
-      Transaction.updateOne({ _id: id }, { isDeleted: true }, (err) => {
-        if (err) {
-          next({
-            statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Transaction not deleted",
-          });
-        }
-        console.log(transaction, "3");
-        return res.status(httpStatus.OK).json({
-          message: "Transaction is deleted",
-          success: true,
-        });
-      });
-    }
-    console.log(transaction, "3");
-    next({
-      statusCode: httpStatus.NOT_FOUND,
-      message: "Transaction not found",
+    return res.status(httpStatus.OK).json({
+      message: "Transaction is deleted",
+      success: true,
     });
   });
 });

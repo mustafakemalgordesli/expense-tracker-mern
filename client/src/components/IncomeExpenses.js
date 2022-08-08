@@ -8,20 +8,6 @@ function IncomeExpenses() {
   const [expense, SetExpense] = useState(0);
   const { transactions } = useTransaction();
 
-  useEffect(() => {
-    console.log("çalışıyorum");
-    for (let i = 0; i < transactions.length; i++) {
-      if (transactions[i].type === "expense") {
-        console.log(expense, transactions[i].amount);
-        let temp = expense + transactions[i].amount;
-        console.log(temp);
-        SetExpense(temp);
-      } else {
-        SetIncome(income + transactions[i].amount);
-      }
-    }
-    SetTotal(income - expense);
-  }, [transactions]);
   return (
     <>
       <TotalBalance balance={total} />
