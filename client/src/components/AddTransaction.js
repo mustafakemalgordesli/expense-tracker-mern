@@ -31,7 +31,6 @@ function AddTransaction() {
           SetTransactions([response?.data?.data, ...transactions]);
           SetText("");
           SetAmount("");
-          SetType("Select transaction type...");
           handleSuccessShow();
         } else {
           handleFailedShow();
@@ -44,7 +43,7 @@ function AddTransaction() {
     e.preventDefault();
   };
   return (
-    <div className="p-5 text-white">
+    <div className="text-white">
       <form onSubmit={handleSubmit}>
         <div className="fs-4">Add New Transaction</div>
         <div className="mb-3">

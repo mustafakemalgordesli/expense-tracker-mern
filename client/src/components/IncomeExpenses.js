@@ -3,14 +3,28 @@ import TotalBalance from "./TotalBalance";
 import { useTransaction } from "../context/TransactionContext";
 
 function IncomeExpenses() {
-  const [total, SetTotal] = useState(0);
-  const [income, SetIncome] = useState(0);
-  const [expense, SetExpense] = useState(0);
   const { transactions } = useTransaction();
+
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
+
+  useEffect(() => {
+    console.log(transactions);
+
+    setExpense((s) => 0);
+    setIncome((s) => 0);
+    transactions.forEach((item) => {
+      if (item.type === "expense") {
+        setExpense((s) => s + item.amount);
+      } else {
+        setIncome((s) => s + item.amount);
+      }
+    });
+  }, [transactions]);
 
   return (
     <>
-      <TotalBalance balance={total} />
+      <TotalBalance balance={income - expense} />
       <div className="container text-center">
         <div className="row">
           <div className="col-3"></div>

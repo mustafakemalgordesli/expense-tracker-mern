@@ -1,4 +1,4 @@
-import "./Transaction.scss";
+import "../assets/Transaction.scss";
 import { useTransaction } from "../context/TransactionContext";
 import axios from "axios";
 function Transaction({ transaction }) {
@@ -34,7 +34,7 @@ function Transaction({ transaction }) {
           className="btn btn-warning"
           onClick={() => handleRemove(transaction._id)}
         >
-          Sil
+          Delete
         </button>
       </div>
     </li>
